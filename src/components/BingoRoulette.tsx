@@ -157,31 +157,112 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
 
           {/* The big ball */}
           <div className="relative mb-8">
+            {/* Screen flash on reveal */}
+            {celebrating && (
+              <div
+                className="fixed inset-0 pointer-events-none z-40 animate-screen-flash"
+                style={{
+                  background:
+                    "radial-gradient(circle at center, hsl(45 100% 75% / 0.7), transparent 60%)",
+                }}
+              />
+            )}
+
+            {/* Confetti on reveal */}
+            {celebrating && (
+              <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden">
+                {confettiPieces.map((p) => (
+                  <div
+                    key={p.id}
+                    className="absolute top-0"
+                    style={{
+                      left: `${p.left}%`,
+                      width: `${p.size}px`,
+                      height: `${p.size * 1.6}px`,
+                      background: p.color,
+                      animation: `confetti-fall ${p.duration}s ${p.delay}s ease-in forwards`,
+                      borderRadius: p.id % 3 === 0 ? "50%" : "2px",
+                      boxShadow: `0 0 8px ${p.color}`,
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Shockwave rings */}
+            {celebrating && (
+              <>
+                <div
+                  className="absolute top-1/2 left-1/2 w-[22rem] h-[22rem] md:w-[34rem] md:h-[34rem] rounded-full border-gold animate-shockwave pointer-events-none"
+                  style={{ borderStyle: "solid" }}
+                />
+                <div
+                  className="absolute top-1/2 left-1/2 w-[22rem] h-[22rem] md:w-[34rem] md:h-[34rem] rounded-full border-crimson animate-shockwave pointer-events-none"
+                  style={{ borderStyle: "solid", animationDelay: "0.25s" }}
+                />
+                <div
+                  className="absolute top-1/2 left-1/2 w-[22rem] h-[22rem] md:w-[34rem] md:h-[34rem] rounded-full border-accent animate-shockwave pointer-events-none"
+                  style={{ borderStyle: "solid", animationDelay: "0.5s" }}
+                />
+              </>
+            )}
+
+            {/* Sparkle burst */}
+            {celebrating && (
+              <div className="absolute top-1/2 left-1/2 pointer-events-none z-20">
+                {sparkles.map((s) => (
+                  <div
+                    key={s.id}
+                    className="absolute top-0 left-0"
+                    style={{
+                      ["--tx" as string]: s.tx,
+                      ["--ty" as string]: s.ty,
+                      animation: `sparkle-burst 1.4s ${s.delay}s ease-out forwards`,
+                    }}
+                  >
+                    <Sparkles
+                      className="w-8 h-8 text-gold"
+                      style={{ filter: "drop-shadow(0 0 8px hsl(var(--gold)))" }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Outer ring */}
             <div
               className={`relative w-[22rem] h-[22rem] md:w-[34rem] md:h-[34rem] rounded-full p-4 ${
-                spinning ? "animate-spin-slow" : ""
+                spinning ? "animate-ring-spin-fast" : ""
               }`}
               style={{
                 background:
-                  "conic-gradient(from 0deg, hsl(var(--gold)), hsl(var(--crimson)), hsl(var(--accent)), hsl(var(--gold)))",
+                  "conic-gradient(from 0deg, hsl(var(--gold)), hsl(var(--crimson)), hsl(var(--accent)), hsl(195 95% 60%), hsl(140 80% 55%), hsl(var(--gold)))",
+                filter: spinning
+                  ? "drop-shadow(0 0 60px hsl(var(--gold) / 0.9))"
+                  : "drop-shadow(0 0 30px hsl(var(--gold) / 0.5))",
               }}
             >
               {/* Inner ball */}
               <div
                 className={`w-full h-full rounded-full ball-3d flex items-center justify-center ${
-                  !spinning && current !== null ? "animate-pulse-glow" : ""
-                }`}
+                  spinning ? "animate-ball-shake" : ""
+                } ${!spinning && current !== null ? "animate-pulse-glow" : ""}`}
               >
-                <div className="w-[88%] h-[88%] rounded-full bg-background/20 backdrop-blur-sm border-4 border-gold/40 flex flex-col items-center justify-center">
+                <button
+                  type="button"
+                  onClick={draw}
+                  disabled={spinning || allDone}
+                  aria-label={spinning ? "抽選中" : "抽選を開始"}
+                  className="w-[88%] h-[88%] rounded-full bg-background/20 backdrop-blur-sm border-4 border-gold/40 flex flex-col items-center justify-center cursor-pointer disabled:cursor-not-allowed transition-transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus-visible:ring-4 focus-visible:ring-gold-glow"
+                >
                   {displayNum === null ? (
-                    <span className="font-display text-5xl md:text-7xl text-gold/70">
-                      READY
+                    <span className="font-display text-6xl md:text-8xl text-rainbow animate-ready-pulse">
+                      {allDone ? "完了" : "READY"}
                     </span>
                   ) : (
                     <>
                       <span className="text-sm md:text-base tracking-widest text-gold/80 font-bold uppercase mb-2">
-                        Number
+                        {spinning ? "Drawing..." : "Number"}
                       </span>
                       <span
                         key={displayNum + (spinning ? "-s" : "-f")}
@@ -193,7 +274,7 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
                       </span>
                     </>
                   )}
-                </div>
+                </button>
               </div>
             </div>
 
