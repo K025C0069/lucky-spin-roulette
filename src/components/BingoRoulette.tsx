@@ -13,27 +13,56 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
   const [current, setCurrent] = useState<number | null>(null);
   const [spinning, setSpinning] = useState(false);
   const [displayNum, setDisplayNum] = useState<number | null>(null);
+  const [celebrating, setCelebrating] = useState(false);
   const intervalRef = useRef<number | null>(null);
 
   const remaining = maxNumber - drawn.length;
   const allDone = remaining === 0;
 
+  // Confetti pieces
+  const confettiPieces = Array.from({ length: 80 }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    delay: Math.random() * 0.5,
+    duration: 1.8 + Math.random() * 1.6,
+    color: [
+      "hsl(var(--gold))",
+      "hsl(var(--crimson))",
+      "hsl(var(--accent))",
+      "hsl(195 95% 60%)",
+      "hsl(140 80% 55%)",
+      "hsl(325 90% 60%)",
+    ][i % 6],
+    size: 8 + Math.random() * 10,
+  }));
+
+  // Sparkle burst directions
+  const sparkles = Array.from({ length: 18 }, (_, i) => {
+    const angle = (i / 18) * Math.PI * 2;
+    const dist = 200 + Math.random() * 100;
+    return {
+      id: i,
+      tx: `${Math.cos(angle) * dist}px`,
+      ty: `${Math.sin(angle) * dist}px`,
+      delay: Math.random() * 0.1,
+    };
+  });
+
   const draw = () => {
     if (spinning || allDone) return;
     setSpinning(true);
+    setCelebrating(false);
 
     const pool: number[] = [];
     for (let i = 1; i <= maxNumber; i++) {
       if (!drawn.includes(i)) pool.push(i);
     }
 
-    // Spin animation: rapidly cycle through random numbers
     intervalRef.current = window.setInterval(() => {
       const rnd = pool[Math.floor(Math.random() * pool.length)];
       setDisplayNum(rnd);
-    }, 60);
+    }, 50);
 
-    // Stop after 2.5s and pick the final
     window.setTimeout(() => {
       if (intervalRef.current) clearInterval(intervalRef.current);
       const final = pool[Math.floor(Math.random() * pool.length)];
@@ -41,6 +70,8 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
       setCurrent(final);
       setDrawn((d) => [...d, final]);
       setSpinning(false);
+      setCelebrating(true);
+      window.setTimeout(() => setCelebrating(false), 3200);
       toast.success(`🎉 ${final} が出ました！`, {
         style: {
           background: "hsl(var(--card))",
@@ -56,6 +87,7 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
     setDrawn([]);
     setCurrent(null);
     setDisplayNum(null);
+    setCelebrating(false);
     toast("リセットしました", {
       style: {
         background: "hsl(var(--card))",
@@ -70,6 +102,7 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
     setDrawn([]);
     setCurrent(null);
     setDisplayNum(null);
+    setCelebrating(false);
   };
 
   useEffect(() => {
