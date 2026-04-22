@@ -77,6 +77,28 @@
     text-shadow: 0 0 20px hsl(var(--gold-glow) / 0.6), 0 2px 4px hsl(0 0% 0% / 0.5);
   }
 
+  .text-rainbow {
+    background: linear-gradient(
+      90deg,
+      hsl(0 95% 60%),
+      hsl(35 100% 55%),
+      hsl(55 100% 55%),
+      hsl(140 80% 55%),
+      hsl(195 95% 60%),
+      hsl(265 90% 65%),
+      hsl(325 90% 60%)
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 3px hsl(230 35% 7%);
+    paint-order: stroke fill;
+    filter: drop-shadow(0 0 18px hsl(45 100% 65% / 0.55))
+            drop-shadow(0 4px 6px hsl(0 0% 0% / 0.6));
+    animation: rainbow-shift 4s linear infinite;
+  }
+
   .ball-3d {
     background: var(--gradient-ball);
     box-shadow: var(--shadow-ball);
@@ -111,6 +133,11 @@
 @keyframes confetti-fall {
   0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+@keyframes rainbow-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 .animate-spin-slow { animation: spin-slow 1s linear infinite; }

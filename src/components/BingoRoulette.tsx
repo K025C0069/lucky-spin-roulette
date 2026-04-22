@@ -152,7 +152,7 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
                       </span>
                       <span
                         key={displayNum + (spinning ? "-s" : "-f")}
-                        className={`font-display text-[9rem] md:text-[15rem] leading-none text-gold text-shadow-gold ${
+                        className={`font-display text-[9rem] md:text-[15rem] leading-none text-rainbow ${
                           spinning ? "animate-number-flip" : "animate-ball-pop"
                         }`}
                       >
@@ -234,7 +234,7 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
                 <div className="text-xs uppercase tracking-wider text-gold/80 mb-1">
                   最新
                 </div>
-                <div className="font-display text-5xl text-gold text-shadow-gold">
+                <div className="font-display text-5xl text-rainbow">
                   {current?.toString().padStart(2, "0")}
                 </div>
               </div>
