@@ -131,8 +131,8 @@
 }
 
 @keyframes confetti-fall {
-  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  0% { transform: translateY(-20vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
 }
 
 @keyframes rainbow-shift {
@@ -140,7 +140,55 @@
   100% { background-position: 200% 50%; }
 }
 
-.animate-spin-slow { animation: spin-slow 1s linear infinite; }
-.animate-ball-pop { animation: ball-pop 0.6s var(--transition-bounce); }
-.animate-number-flip { animation: number-flip 0.15s ease-in-out; }
+@keyframes mega-reveal {
+  0% { transform: scale(0) rotate(-540deg); opacity: 0; filter: blur(20px) brightness(2); }
+  40% { transform: scale(1.6) rotate(15deg); opacity: 1; filter: blur(0) brightness(1.5); }
+  60% { transform: scale(0.85) rotate(-8deg); }
+  80% { transform: scale(1.15) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); filter: blur(0) brightness(1); }
+}
+
+@keyframes screen-flash {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes shockwave {
+  0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0.9; border-width: 12px; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; border-width: 1px; }
+}
+
+@keyframes ring-spin-fast {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ball-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  20% { transform: translate(-8px, 4px) rotate(-2deg); }
+  40% { transform: translate(8px, -4px) rotate(2deg); }
+  60% { transform: translate(-6px, -6px) rotate(-1deg); }
+  80% { transform: translate(6px, 6px) rotate(1deg); }
+}
+
+@keyframes ready-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px hsl(var(--gold) / 0.6)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 40px hsl(var(--gold) / 1)); }
+}
+
+@keyframes sparkle-burst {
+  0% { transform: translate(-50%, -50%) scale(0) rotate(0); opacity: 1; }
+  60% { opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(360deg); opacity: 0; }
+}
+
+.animate-spin-slow { animation: spin-slow 0.6s linear infinite; }
+.animate-ball-pop { animation: mega-reveal 1s var(--transition-bounce); }
+.animate-number-flip { animation: number-flip 0.1s ease-in-out; }
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-screen-flash { animation: screen-flash 0.7s ease-out; }
+.animate-shockwave { animation: shockwave 1.2s ease-out; }
+.animate-ring-spin-fast { animation: ring-spin-fast 0.4s linear infinite; }
+.animate-ball-shake { animation: ball-shake 0.15s ease-in-out infinite; }
+.animate-ready-pulse { animation: ready-pulse 1.8s ease-in-out infinite; }
