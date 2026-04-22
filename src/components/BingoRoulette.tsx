@@ -126,7 +126,7 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
           <div className="relative mb-8">
             {/* Outer ring */}
             <div
-              className={`relative w-72 h-72 md:w-96 md:h-96 rounded-full p-3 ${
+              className={`relative w-[22rem] h-[22rem] md:w-[34rem] md:h-[34rem] rounded-full p-4 ${
                 spinning ? "animate-spin-slow" : ""
               }`}
               style={{
@@ -142,17 +142,17 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
               >
                 <div className="w-[88%] h-[88%] rounded-full bg-background/20 backdrop-blur-sm border-4 border-gold/40 flex flex-col items-center justify-center">
                   {displayNum === null ? (
-                    <span className="font-display text-3xl md:text-4xl text-gold/70">
+                    <span className="font-display text-5xl md:text-7xl text-gold/70">
                       READY
                     </span>
                   ) : (
                     <>
-                      <span className="text-xs md:text-sm tracking-widest text-gold/80 font-bold uppercase mb-1">
+                      <span className="text-sm md:text-base tracking-widest text-gold/80 font-bold uppercase mb-2">
                         Number
                       </span>
                       <span
                         key={displayNum + (spinning ? "-s" : "-f")}
-                        className={`font-display text-8xl md:text-9xl text-gold text-shadow-gold ${
+                        className={`font-display text-[9rem] md:text-[15rem] leading-none text-gold text-shadow-gold ${
                           spinning ? "animate-number-flip" : "animate-ball-pop"
                         }`}
                       >
