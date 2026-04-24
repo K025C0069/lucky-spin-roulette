@@ -118,12 +118,12 @@ const BingoRoulette = ({ maxNumber: initialMax = 75 }: BingoRouletteProps) => {
         <div className="inline-flex items-center gap-3 mb-3">
           <Sparkles className="w-6 h-6 text-gold animate-pulse" />
           <span className="text-gold/80 tracking-[0.4em] text-xs md:text-sm font-semibold uppercase">
-            Lucky Draw Machine
+            ActによるActの為の
           </span>
           <Sparkles className="w-6 h-6 text-gold animate-pulse" />
         </div>
         <h1 className="font-display text-5xl md:text-7xl text-gold text-shadow-gold">
-          ビンゴ抽選会
+          Act抽選会
         </h1>
         <div className="flex justify-center gap-1 mt-3">
           {[...Array(5)].map((_, i) => (
